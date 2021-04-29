@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="" description="">
+	<nodes>
+		<node id="0" name="Reader" qualified_name="orangecustom.OWIReader.OWIReader" project_name="ImageTools" version="" title="Reader" position="(222.0, 186.0)" />
+		<node id="1" name="Python Script" qualified_name="Orange.widgets.data.owpythonscript.OWPythonScript" project_name="Orange3" version="" title="Python Script" position="(427.0, 92.0)" />
+	</nodes>
+	<links>
+		<link id="0" source_node_id="0" sink_node_id="1" source_channel="Nuance de gris" sink_channel="Object" enabled="true" />
+	</links>
+	<annotations />
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="literal">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x02\xa1\x00\x00\x00\x89\x00\x00\x05\x18\x00\x00\x01\xd8\x00\x00\x02\xa2\x00\x00\x00\xa8\x00\x00\x05\x17\x00\x00\x01\xd7\x00\x00\x00\x00\x00\x00\x00\x00\x05V\x00\x00\x02\xa2\x00\x00\x00\xa8\x00\x00\x05\x17\x00\x00\x01\xd7', '__version__': 1}</properties>
+		<properties node_id="1" format="literal">{'controlAreaVisible': True, 'currentScriptIndex': 0, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\xff\xff\xff\xff\xff\xff\xff\xf8\x00\x00\x05V\x00\x00\x02p\x00\x00\x00\x00\x00\x00\x00\x17\x00\x00\x05U\x00\x00\x02o\x00\x00\x00\x00\x02\x00\x00\x00\x05V\x00\x00\x00\x00\x00\x00\x00\x17\x00\x00\x05U\x00\x00\x02o', 'scriptLibrary': [], 'scriptText': 'import Orange\n\n# copy inputs on outputs\nout_data = in_data\nout_learner = in_learner\nout_classifier = in_classifier\nout_object = in_object', 'splitterState': b'\x00\x00\x00\xff\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\xb4\x00\x00\x00\xc2\x01\xff\xff\xff\xff\x01\x00\x00\x00\x02\x00', '__version__': 2}</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

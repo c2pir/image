@@ -1,0 +1,5 @@
+nécessite une version de VS C++ build tools > 2014 :
+https://visualstudio.microsoft.com/fr/visual-cpp-build-tools/
+
+cd path\to\add_ons
+pip install -e add_ons
