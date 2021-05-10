@@ -23,13 +23,15 @@ class OWIAdd(OWWidget):
     class Outputs:
         result = Output("Somme", Orange.data.Table)
 
+    want_main_area = False
+
     def __init__(self):
         super().__init__()
         self.imgs = None
         self.result = None
 
         #GUI
-        box2 = gui.widgetBox(self.mainArea, "Display")
+        box2 = gui.widgetBox(self.controlArea, "Display")
         hb = gui.hBox(box2)
         self.display = SFigure(self)
         hb.layout().addWidget(self.display)
@@ -55,9 +57,9 @@ class OWIAdd(OWWidget):
 # Orange methods
     @Inputs.imgs
     def set_imgs(self, dataset):
+        self.imgs = dataset
+        self.update_listview()
         if isSameShape(dataset): # verification same shape
-            self.imgs = dataset
-            self.update_listview()
             self.commit()
             self.clear_messages()
         else:

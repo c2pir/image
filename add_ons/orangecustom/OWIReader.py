@@ -20,7 +20,7 @@ from skimage import io
 
 class OWIReader(OWWidget):
     name = "Reader"
-    description = "Ouvre une image"
+    description = "Ouvre les images présentes dans un dossier"
     icon = "icons/image_reader.png"
     priority = 10
 

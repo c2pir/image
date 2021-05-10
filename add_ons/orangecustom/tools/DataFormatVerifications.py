@@ -14,7 +14,7 @@ def isSameShape(dataset):
     """ TODO """
     if isListOfArray(dataset):
         is_ok = True
-        ref_shape = dataset[0]
+        ref_shape = dataset[0].shape
         for img in dataset:
             if ref_shape != img.shape:
                 return False
