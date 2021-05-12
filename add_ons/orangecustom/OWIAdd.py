@@ -60,8 +60,8 @@ class OWIAdd(OWWidget):
         self.imgs = dataset
         self.update_listview()
         if isListSameShape(dataset): # verification same shape
-            self.commit()
             self.clear_messages()
+            self.commit()
         else:
             self.warning("Images in inputs have not all the same size")
 
@@ -75,7 +75,7 @@ class OWIAdd(OWWidget):
         # TODO add normalisation option
 
         self.display.clear()
-        self.display.draw3D(r)
-
-        self.result = Orange.data.table.Table.from_numpy(None, r)
-        self.Outputs.result.send(self.result)
+        if len(self.lv_images.selectedItems()) != 0:
+            self.display.draw3D(r)
+            self.result = Orange.data.table.Table.from_numpy(None, r)
+            self.Outputs.result.send(self.result)

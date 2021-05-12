@@ -24,6 +24,7 @@ class OWIResize(OWWDisplay3D):
         result = Output("Resized images", list)
 
     selected_resize_type = settings.Setting(0)
+    allow_propagation = settings.Setting(True)
 
     def __init__(self):
         super().__init__()
@@ -46,15 +47,21 @@ class OWIResize(OWWDisplay3D):
         self.sp_h.setMinimum(1)
         #self.sp_w.valueChanged.connect(self.on_value_change)
         #self.sp_h.valueChanged.connect(self.on_value_change)
-        hl0.layout().addWidget(self.sp_w)
         hl0.layout().addWidget(self.sp_h)
+        hl0.layout().addWidget(self.sp_w)
 
         gui.radioButtons(box2,self,'selected_resize_type',["Crop top left","Crop center","Resize"])
 
         gui.toolButton(box2,self,"Apply and save current settings",callback=self.do_save_conf)
 
+        gui.checkBox(self.buttonsArea, self,
+                     'allow_propagation',
+                     'Allow propagation',
+                     callback=self.commit)
+
 # GUI methods
     def init_default_config(self):
+        """TODO"""
         self.saved_config = []
         for img in self.imgs:
             d = {"selected_resize_type":0,
@@ -63,12 +70,17 @@ class OWIResize(OWWDisplay3D):
             self.saved_config.append(d)
 
     def do_save_conf(self):
+        """TODO"""
         conf = self.saved_config[self.index_current_img]
         conf["desired_width"] = self.sp_w.value()
         conf["desired_height"] = self.sp_h.value()
         conf["selected_resize_type"] = self.selected_resize_type
+        self.compute()
+        self.update_display()
+        self.commit()
 
     def on_img_change(self):
+        """TODO"""
         img = self.imgs[self.index_current_img]
         conf = self.saved_config[self.index_current_img]
         self.info_shape.setText("Original shape: {}".format(img.shape))
@@ -78,12 +90,29 @@ class OWIResize(OWWDisplay3D):
         self.sp_h.setValue(conf["desired_height"])
         self.selected_resize_type = conf["selected_resize_type"]
 
+    def compute(self):
+        """TODO"""
+        img = self.imgs[self.index_current_img]
+        conf = self.saved_config[self.index_current_img]
+        w,h = conf["desired_width"],conf["desired_height"]
+
+        if conf["selected_resize_type"] == 0:
+            self.result[self.index_current_img] = img[:h,:w]
+
+        elif conf["selected_resize_type"] == 1:
+            H,W = img.shape
+            self.result[self.index_current_img] = img[int(H/2-h/2):int(H/2+h/2),
+                                                      int(W/2-w/2):int(W/2+w/2)]
+        elif conf["selected_resize_type"] == 2:
+            # TODO
+            pass
 
 # Orange methods
     @Inputs.imgs
     def set_imgs(self, dataset):
         if isListOfArray(dataset):
             self.imgs = dataset
+            self.result = [img.copy() for img in self.imgs]
             self.init_default_config()
             self.commit()
         else:
@@ -91,9 +120,9 @@ class OWIResize(OWWDisplay3D):
 
     def commit(self):
         """Send the outputs"""
-        self.result = self.imgs
-        self.Outputs.result.send(self.result)
-        self.update_display()
+        if self.allow_propagation:
+            self.Outputs.result.send(self.result)
+            self.update_display()
 
 if __name__ == "__main__":
     # https://orange3.readthedocs.io/projects/orange-development/en/latest/testing.html#running-widgets-as-scripts
