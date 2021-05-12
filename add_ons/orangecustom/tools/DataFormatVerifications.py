@@ -10,7 +10,7 @@ def isListOfArray(dataset):
     else:
         return False
 
-def isSameShape(dataset):
+def isListSameShape(dataset):
     """ TODO """
     if isListOfArray(dataset):
         is_ok = True

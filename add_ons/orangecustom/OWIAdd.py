@@ -8,7 +8,7 @@ from Orange.widgets.widget import OWWidget, Input, Output
 from Orange.widgets import gui, settings
 from AnyQt import QtWidgets, QtCore, QtGui
 
-from orangecustom.tools.DataFormatVerifications import isSameShape
+from orangecustom.tools.DataFormatVerifications import isListSameShape
 from orangecustom.tools.Graph import SFigure
 
 class OWIAdd(OWWidget):
@@ -59,7 +59,7 @@ class OWIAdd(OWWidget):
     def set_imgs(self, dataset):
         self.imgs = dataset
         self.update_listview()
-        if isSameShape(dataset): # verification same shape
+        if isListSameShape(dataset): # verification same shape
             self.commit()
             self.clear_messages()
         else:

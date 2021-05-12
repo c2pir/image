@@ -10,7 +10,7 @@ from AnyQt import QtWidgets, QtCore, QtGui
 
 
 class OWIMean(OWWidget):
-    name = "Mean"
+    name = "Scalar"
     description = "Calculs les moyennes pour chaque image de la liste en entrée"
     icon = "icons/mean.png"
     priority = 10
@@ -33,7 +33,8 @@ class OWIMean(OWWidget):
         self.infoa = gui.widgetLabel(box, 'No data yet, waiting to get something.')
 
         self.tw_results = QtWidgets.QTableWidget(self)
-        self.tw_results.setColumnCount(1)
+        self.tw_results.setColumnCount(3)
+        self.tw_results.setHorizontalHeaderLabels(["mean","deviation","variance"])
         box.layout().addWidget(self.tw_results)
 
 # Orange methods
@@ -51,10 +52,14 @@ class OWIMean(OWWidget):
         i = 0
         for img in self.imgs:
             mean = np.mean(img)
-            r.append(mean)
-            self.tw_results.setCellWidget(i,0,QtWidgets.QLabel("{}".format(mean)))
+            standart_deviation = np.std(img)
+            variance = np.var(img)
+            r.append([mean, standart_deviation, variance])
+            self.tw_results.setCellWidget(i, 0, QtWidgets.QLabel("{:.5f}".format(mean)))
+            self.tw_results.setCellWidget(i, 1, QtWidgets.QLabel("{:.5f}".format(standart_deviation)))
+            self.tw_results.setCellWidget(i, 2, QtWidgets.QLabel("{:.5f}".format(variance)))
             i += 1
-        r = np.array([r]).T
+        r = np.array(r).T
 
         self.result = Orange.data.table.Table.from_numpy(None,r)
         self.Outputs.result.send(self.result)

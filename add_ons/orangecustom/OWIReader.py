@@ -68,6 +68,8 @@ class OWIReader(OWWidget):
         self.infob = gui.widgetLabel(box, '...')
         layout.addWidget(self.infob, 1, 0)
 
+        # TODO add display/section area
+
 # GUI methods
     def browse_folder(self):
         """ TODO """

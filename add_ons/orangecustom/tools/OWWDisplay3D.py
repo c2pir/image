@@ -28,6 +28,10 @@ class OWWDisplay3D(OWWidget):
         box.layout().addWidget(self.display)
 
 # GUI methods
+    def on_img_change(self):
+        """For children"""
+        pass
+
     def previous_img(self):
         """ TODO """
         if self.result is not None:
@@ -42,10 +46,12 @@ class OWWDisplay3D(OWWidget):
                 self.index_current_img += 1
                 self.update_display()
 
+
     def update_display(self):
         """ TODO """
         if len(self.result) > self.index_current_img:
             self.l_img_index.setText("{}/{}".format(self.index_current_img + 1, len(self.result)))
             self.display.clear()
             self.display.draw3D(self.result[self.index_current_img])
+            self.on_img_change()
 
