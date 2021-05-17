@@ -7,6 +7,7 @@ import Orange.data
 from Orange.widgets.widget import OWWidget, Input, Output
 from Orange.widgets import gui, settings
 from AnyQt import QtWidgets, QtCore, QtGui
+from skimage.transform import resize
 
 from orangecustom.tools.OWWDisplay3D import OWWDisplay3D
 from orangecustom.tools.DataFormatVerifications import isListOfArray
@@ -35,7 +36,7 @@ class OWIResize(OWWDisplay3D):
         # GUI
         self.infoa = gui.widgetLabel(self.box_info, 'No data yet, waiting to get something.')
 
-        # TODO checkbox auto
+        # TODO checkbox automatic crop and/or resize on alls
 
         box2 = gui.widgetBox(self.controlArea, "Custom")
         self.info_shape = gui.widgetLabel(box2, 'Original shape: ')
@@ -61,7 +62,7 @@ class OWIResize(OWWDisplay3D):
 
 # GUI methods
     def init_default_config(self):
-        """TODO"""
+        """Initialize default UI configurations"""
         self.saved_config = []
         for img in self.imgs:
             d = {"selected_resize_type":0,
@@ -70,7 +71,7 @@ class OWIResize(OWWDisplay3D):
             self.saved_config.append(d)
 
     def do_save_conf(self):
-        """TODO"""
+        """Apply crop or resize on current displayed image."""
         conf = self.saved_config[self.index_current_img]
         conf["desired_width"] = self.sp_w.value()
         conf["desired_height"] = self.sp_h.value()
@@ -80,7 +81,7 @@ class OWIResize(OWWDisplay3D):
         self.commit()
 
     def on_img_change(self):
-        """TODO"""
+        """On current displayed image change method."""
         img = self.imgs[self.index_current_img]
         conf = self.saved_config[self.index_current_img]
         self.info_shape.setText("Original shape: {}".format(img.shape))
@@ -91,7 +92,7 @@ class OWIResize(OWWDisplay3D):
         self.selected_resize_type = conf["selected_resize_type"]
 
     def compute(self):
-        """TODO"""
+        """Apply choosen transformation on selected image."""
         img = self.imgs[self.index_current_img]
         conf = self.saved_config[self.index_current_img]
         w,h = conf["desired_width"],conf["desired_height"]
@@ -104,8 +105,7 @@ class OWIResize(OWWDisplay3D):
             self.result[self.index_current_img] = img[int(H/2-h/2):int(H/2+h/2),
                                                       int(W/2-w/2):int(W/2+w/2)]
         elif conf["selected_resize_type"] == 2:
-            # TODO
-            pass
+            self.result[self.index_current_img] = resize(img.copy(),(h,w))
 
 # Orange methods
     @Inputs.imgs

@@ -16,9 +16,9 @@ from AnyQt.QtWidgets import \
 from Orange.widgets.data import owfile
 from skimage import io
 
+from orangecustom.tools.OWWDisplay3D import OWWDisplay3D
 
-
-class OWIReader(OWWidget):
+class OWIReader(OWWDisplay3D):
     name = "Reader"
     description = "Ouvre les images présentes dans un dossier"
     icon = "icons/image_reader.png"
@@ -30,7 +30,7 @@ class OWIReader(OWWidget):
         green = Output("Verts", list)
         blue = Output("Bleus", list)
 
-    want_main_area = False
+    #want_main_area = False
 
     def __init__(self):
         super().__init__()
@@ -40,6 +40,7 @@ class OWIReader(OWWidget):
         self.green = None
         self.blue = None
         self.gray = None
+        self.result = None
 
         # GUI
         layout = QGridLayout()
@@ -48,59 +49,67 @@ class OWIReader(OWWidget):
 
         box = gui.hBox(None, addToLayout=False, margin=0)
         box.setSizePolicy(Policy.MinimumExpanding, Policy.Fixed)
-        self.infoa = gui.widgetLabel(box, 'No path selected.')
-        box.layout().addWidget(self.infoa)
-        layout.addWidget(box, 0, 1)
+        box.layout().addWidget(gui.widgetLabel(box, 'Select a folder:'))
 
         file_button = gui.button(
             None, self, '...', callback=self.browse_folder, autoDefault=False)
         file_button.setIcon(self.style().standardIcon(QStyle.SP_DirOpenIcon))
         file_button.setSizePolicy(Policy.Maximum, Policy.Fixed)
-        layout.addWidget(file_button, 0, 2)
+        box.layout().addWidget(file_button)
 
         reload_button = gui.button(
             None, self, "Reload", callback=self.load_data, autoDefault=False)
         reload_button.setIcon(self.style().standardIcon(
             QStyle.SP_BrowserReload))
         reload_button.setSizePolicy(Policy.Fixed, Policy.Fixed)
-        layout.addWidget(reload_button, 0, 3)
+        #layout.addWidget(reload_button, 0, 2)
+        box.layout().addWidget(reload_button)
+        layout.addWidget(box, 0, 0)
 
-        self.infob = gui.widgetLabel(box, '...')
-        layout.addWidget(self.infob, 1, 0)
+        self.infoa = gui.widgetLabel(self, 'No path selected.')
+        layout.addWidget(self.infoa , 1, 0)
 
-        # TODO add display/section area
+        self.infob = gui.widgetLabel(self, '...')
+        layout.addWidget(self.infob, 2, 0)
+
 
 # GUI methods
     def browse_folder(self):
-        """ TODO """
+        """Open folder explorer then load images."""
         self.folderpath = QFileDialog.getExistingDirectory(self, 'Select Folder')
         self.infoa.setText(self.folderpath)
         self.load_data()
 
 
     def load_data(self):
-        """ TODO """
+        """Load images in folder path."""
         if self.folderpath != "":
             self.red = []
             self.green = []
             self.blue = []
             self.gray = []
+            self.result = []
             list_files = ""
             cpt = 0
             for file_name in os.listdir(self.folderpath):
                 if file_name.endswith(".jpg") or file_name.endswith(".png"):
-                    print(file_name)
-                    list_files += "{}: {}\n".format(cpt,file_name)
+
                     path = os.path.join(self.folderpath, file_name)
                     img = io.imread(path)
-                    img_gray = io.imread(path,as_gray=True)
-                    self.gray.append(img_gray)
-                    self.red.append(img[:, :, 0]/255.0)
-                    self.green.append(img[:, :, 1]/255.0)
-                    self.blue.append(img[:, :, 2]/255.0)
-                    cpt += 1
+
+                    if len(img.shape)>=3:
+                        img_gray = io.imread(path,as_gray=True)
+                        self.result.append(img)
+                        self.gray.append(img_gray)
+                        self.red.append(img[:, :, 0]/255.0)
+                        self.green.append(img[:, :, 1]/255.0)
+                        self.blue.append(img[:, :, 2]/255.0)
+
+                        list_files += "{}: {}\n".format(cpt, file_name)
+                        cpt += 1
 
             self.infob.setText(list_files)
+            self.update_display()
             self.commit()
 
 # Orange methods

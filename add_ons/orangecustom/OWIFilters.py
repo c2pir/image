@@ -70,7 +70,7 @@ class OWIFilters(OWWDisplay3D):
 
 # GUI methods
     def compute(self,filter_name):
-        """ TODO """
+        """ Apply selected filter on inputs images """
         self.result = []
         for img in self.imgs:
             r = filters_dict[filter_name](img)
@@ -80,7 +80,7 @@ class OWIFilters(OWWDisplay3D):
             self.result.append(r)
 
     def selection_changed(self):
-        """ TODO """
+        """Update filter selected and update if propagation is on """
         filter_name = self.cb_selectes_filter.currentText()
 
         # show filter description

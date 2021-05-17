@@ -42,7 +42,7 @@ class OWIRGBMaker(OWWidget):
         box2.layout().addWidget(self.display)
 
     def compose(self):
-        """TODO"""
+        """Construct RGB image from 3 grayscale images."""
         if (self.red is not None) and \
             (self.green is not None) and \
             (self.blue is not None):
