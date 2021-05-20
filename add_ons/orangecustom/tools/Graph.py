@@ -76,9 +76,6 @@ class SFigure(QtWidgets.QWidget,OWComponent):
         
         self.canvas = FigureCanvas(self.fig)
         self.canvas.setParent(self)
-        self.canvas.mpl_connect('button_release_event',self.onRelease)
-        self.canvas.mpl_connect('motion_notify_event',self.onMouseMove)
-        self.canvas.mpl_connect('button_press_event',self.onPress)
         
         self.axes = self.fig.add_subplot(111)
         
@@ -105,13 +102,3 @@ class SFigure(QtWidgets.QWidget,OWComponent):
         self.axes.plot(*data,**kwargs) #,label = self.label)
         self.axes.legend()
         self.canvas.draw()
-        
-    
-    def onPress(self,event):
-        pass
-    
-    def onMouseMove(self,event):
-        pass
-    
-    def onRelease(self,event):
-        pass

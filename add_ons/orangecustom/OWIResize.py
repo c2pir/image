@@ -26,6 +26,7 @@ class OWIResize(OWWDisplay3D):
 
     selected_resize_type = settings.Setting(0)
     allow_propagation = settings.Setting(True)
+    auto_resize = settings.Setting(False)
 
     def __init__(self):
         super().__init__()
@@ -36,11 +37,14 @@ class OWIResize(OWWDisplay3D):
         # GUI
         self.infoa = gui.widgetLabel(self.box_info, 'No data yet, waiting to get something.')
 
-        # TODO checkbox automatic crop and/or resize on alls
+        gui.checkBox(self.controlArea, self,
+                     'auto_resize',
+                     'Apply automatic settings',
+                     callback=self.do_auto_conf)
 
-        box2 = gui.widgetBox(self.controlArea, "Custom")
-        self.info_shape = gui.widgetLabel(box2, 'Original shape: ')
-        hl0 = gui.hBox(box2)
+        self.box_custom = gui.widgetBox(self.controlArea, "Custom")
+        self.info_shape = gui.widgetLabel(self.box_custom, 'Original shape: ')
+        hl0 = gui.hBox(self.box_custom)
         gui.label(hl0, self, "Desired shape:")
         self.sp_w = QtWidgets.QSpinBox(self) # gui.spin(hl0, self, 'desired_width', minv=1, maxv=5000, step=1)
         self.sp_h = QtWidgets.QSpinBox(self) #self.sp_h = gui.spin(hl0, self, 'desired_height', minv=1, maxv=5000, step=1)
@@ -51,9 +55,9 @@ class OWIResize(OWWDisplay3D):
         hl0.layout().addWidget(self.sp_h)
         hl0.layout().addWidget(self.sp_w)
 
-        gui.radioButtons(box2,self,'selected_resize_type',["Crop top left","Crop center","Resize"])
+        gui.radioButtons(self.box_custom,self,'selected_resize_type',["Crop top left","Crop center","Resize"])
 
-        gui.toolButton(box2,self,"Apply and save current settings",callback=self.do_save_conf)
+        gui.toolButton(self.box_custom,self,"Apply and save current settings",callback=self.do_save_conf)
 
         gui.checkBox(self.buttonsArea, self,
                      'allow_propagation',
@@ -69,6 +73,40 @@ class OWIResize(OWWDisplay3D):
                  "desired_width":img.shape[1],
                  "desired_height":img.shape[0]}
             self.saved_config.append(d)
+
+    def do_auto_conf(self):
+        """TODO"""
+        if self.auto_resize:
+            # GUI
+            self.box_custom.setEnabled(False)
+
+            if self.imgs is not None:
+                # find mean heigth and width
+                hm,wm = 0,0
+                n = len(self.imgs)
+                for img in self.imgs:
+                    h,w = img.shape
+                    hm += h/float(n)
+                    wm += w/float(n)
+                print(hm,wm)
+
+                # TODO apply resize on too small images
+                for img in self.imgs:
+                    h,w = img.shape
+                    do_it = False
+                    if (h<hm) and (h<=w):
+                        new_shape = (hm,int((hm/h)*w))
+                        do_it = True
+                    if (w<wm) and (w<=h):
+                        new_shape = (int((wm/w)*h),wm)
+                        do_it = True
+                    if do_it:
+                        img2 = resize(img,new_shape)
+
+                # TODO apply crop on too big images
+        else:
+            self.box_custom.setEnabled(True)
+
 
     def do_save_conf(self):
         """Apply crop or resize on current displayed image."""
