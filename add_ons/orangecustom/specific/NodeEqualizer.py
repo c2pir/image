@@ -71,12 +71,22 @@ class NodeEqualizer(object):
 
 if __name__=="__main__":
     from skimage import io
+    from orangecustom.specific.approximation import Approximateur
     import matplotlib.pyplot as plt
+
+    print("Create an approximation from learning table")
+    length = 300
+    learning_table = {"inputs":np.random.random((length,5)),
+                      "outputs":np.random.random((length,13))}
+    app = Approximateur(inputs = learning_table["inputs"],
+                        outputs = learning_table["outputs"])
+    app.division()
+    print("End of approximation creation")
 
     context = io.imread("../icons/cut.png",as_gray=True)
 
     def behaviour(x):
-        return np.random.random((13,))
+        return app.expression(x)
 
     all_nodes = create_nodes_equalizer_from(context,behaviour)
 
@@ -86,3 +96,4 @@ if __name__=="__main__":
         result = node.iteration(result,ones,dt = 0.05)
 
     plt.imshow(result)
+    plt.show()

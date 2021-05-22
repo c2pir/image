@@ -7,9 +7,11 @@ import Orange.data
 from Orange.widgets.widget import OWWidget, Input, Output
 from Orange.widgets import gui, settings
 from AnyQt import QtWidgets, QtCore, QtGui
+from AnyQt.QtWidgets import QStyle, QSizePolicy
 from skimage.transform import resize
 
 from orangecustom.tools.Graph import SFigure
+from orangecustom.tools.Table import STable
 from orangecustom.tools.DataFormatVerifications import isListOfArray
 from orangecustom.specific.NodeEqualizer import create_nodes_equalizer_from
 
@@ -32,9 +34,21 @@ class OWISimulation(OWWidget):
         self.nodes = None
 
         #GUI
+        box0 = gui.widgetBox(self.controlArea, "Shifts")
+        self.in_shift_table = STable(self, title="Inputs indexes table:")
+        self.out_shift_table = STable(self, title="Outputs indexes table:")
+        box0.layout().addWidget(self.in_shift_table)
+        box0.layout().addWidget(self.out_shift_table)
+
+        file_button = gui.button(self.controlArea,self,"Open script", autoDefault=False)
+        file_button.setIcon(self.style().standardIcon(QStyle.SP_DirOpenIcon))
+        file_button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+
         box = gui.widgetBox(self.mainArea, "Display")
         self.display = SFigure(self)
         box.layout().addWidget(self.display)
+
+
 
 # GUI methods
     def run_simu(self):
