@@ -6,9 +6,8 @@
 		<node id="2" name="Select" qualified_name="orangecustom.OWISelection.OWISelection" project_name="ImageTools" version="" title="Select" position="(349.0, 93.0)" />
 	</nodes>
 	<links>
-		<link id="0" source_node_id="0" sink_node_id="2" source_channel="Nuance de gris" sink_channel="Images" enabled="true" />
-		<link id="1" source_node_id="0" sink_node_id="1" source_channel="Nuance de gris" sink_channel="Images" enabled="true" />
-		<link id="2" source_node_id="2" sink_node_id="1" source_channel="Dernière selection" sink_channel="Tableau de pondération" enabled="true" />
+		<link id="0" source_node_id="2" sink_node_id="1" source_channel="Dernière selection" sink_channel="Tableau de pondération" enabled="true" />
+		<link id="1" source_node_id="0" sink_node_id="2" source_channel="Grayscale" sink_channel="Images" enabled="true" />
 	</links>
 	<annotations />
 	<thumbnail />

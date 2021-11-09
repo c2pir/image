@@ -2,7 +2,7 @@
 <scheme version="2.0" title="" description="">
 	<nodes>
 		<node id="0" name="Reader" qualified_name="orangecustom.OWIReader.OWIReader" project_name="ImageTools" version="" title="Reader" position="(183.0, 126.0)" />
-		<node id="1" name="Mean" qualified_name="orangecustom.OWIMean.OWIMean" project_name="ImageTools" version="" title="Mean" position="(735.0, -120.0)" />
+		<node id="1" name="Scalar" qualified_name="orangecustom.OWIMean.OWIMean" project_name="ImageTools" version="" title="Mean" position="(735.0, -120.0)" />
 		<node id="2" name="Filters" qualified_name="orangecustom.OWIFilters.OWIFilters" project_name="ImageTools" version="" title="Filters" position="(454.0, 3.0)" />
 		<node id="3" name="Histogram" qualified_name="orangecustom.OWIHistogram.OWIHistogram" project_name="ImageTools" version="" title="Histogram" position="(736.0, 77.0)" />
 		<node id="4" name="Select" qualified_name="orangecustom.OWISelection.OWISelection" project_name="ImageTools" version="" title="Select" position="(435.0, 320.0)" />
@@ -17,12 +17,14 @@
 		<link id="1" source_node_id="2" sink_node_id="1" source_channel="Liste des resultats" sink_channel="Liste d'images" enabled="true" />
 		<link id="2" source_node_id="4" sink_node_id="6" source_channel="Dernière selection" sink_channel="Masque" enabled="true" />
 		<link id="3" source_node_id="4" sink_node_id="8" source_channel="Dernière selection" sink_channel="Pattern" enabled="true" />
-		<link id="4" source_node_id="5" sink_node_id="4" source_channel="Nuance de gris" sink_channel="Images" enabled="true" />
-		<link id="5" source_node_id="7" sink_node_id="6" source_channel="Images selectionnées" sink_channel="Images" enabled="true" />
-		<link id="6" source_node_id="0" sink_node_id="7" source_channel="Nuance de gris" sink_channel="Images" enabled="true" />
-		<link id="7" source_node_id="2" sink_node_id="9" source_channel="Liste des resultats" sink_channel="Liste d'images" enabled="true" />
-		<link id="8" source_node_id="7" sink_node_id="8" source_channel="Images selectionnées" sink_channel="Images" enabled="true" />
-		<link id="9" source_node_id="0" sink_node_id="2" source_channel="Nuance de gris" sink_channel="Liste d'images" enabled="true" />
+		<link id="4" source_node_id="7" sink_node_id="6" source_channel="Images selectionnées" sink_channel="Images" enabled="true" />
+		<link id="5" source_node_id="2" sink_node_id="9" source_channel="Liste des resultats" sink_channel="Liste d'images" enabled="true" />
+		<link id="6" source_node_id="7" sink_node_id="8" source_channel="Images selectionnées" sink_channel="Images" enabled="true" />
+		<link id="7" source_node_id="0" sink_node_id="2" source_channel="Grayscale" sink_channel="Liste d'images" enabled="true" />
+		<link id="8" source_node_id="5" sink_node_id="4" source_channel="Grayscale" sink_channel="Images" enabled="true" />
+		<link id="9" source_node_id="0" sink_node_id="7" source_channel="Grayscale" sink_channel="Images" enabled="true" />
+		<link id="10" source_node_id="0" sink_node_id="4" source_channel="Grayscale" sink_channel="Images" enabled="true" />
+		<link id="11" source_node_id="5" sink_node_id="7" source_channel="Grayscale" sink_channel="Images" enabled="true" />
 	</links>
 	<annotations />
 	<thumbnail />

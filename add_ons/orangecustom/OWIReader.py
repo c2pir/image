@@ -25,7 +25,7 @@ class OWIReader(OWWDisplay3D):
     priority = 10
 
     class Outputs:
-        gray = Output("Nuance de gris", list)
+        gray = Output("Grayscale", list)
         red = Output("Rouges", list)
         green = Output("Verts", list)
         blue = Output("Bleus", list)
