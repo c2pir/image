@@ -43,8 +43,10 @@ class OWILocalFilter(OWWDisplay3D):
         hl1 = gui.hBox(optionsBox)
         gui.label(hl1, self, 'shift y')
         gui.spin(hl1, self, 'center_y', minv=0, maxv=20, step=1)
+        gui.toolButton(optionsBox,self,"Refresh",callback=self.commit)
+        
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        optionsBox.layout().addItem(spacerItem)
+        self.controlArea.layout().addItem(spacerItem)
 
 # Orange methods
     @Inputs.msk
@@ -67,8 +69,9 @@ class OWILocalFilter(OWWDisplay3D):
             r = 0
             for i in range(msk.shape[0]):
                 for j in range(msk.shape[1]):
-                    shifted = np.roll(img,i,0)
-                    shifted = np.roll(shifted, j, 1)
+                    si, sj = (i-self.center_y), (j-self.center_x)
+                    shifted = np.roll(img, si, 0)
+                    shifted = np.roll(shifted, sj, 1)
                     r += msk[i,j]*shifted
             self.result.append(r)
 
