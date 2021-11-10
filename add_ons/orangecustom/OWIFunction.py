@@ -12,6 +12,20 @@ from skimage import morphology as sm #import dilation, erosion
 from orangecustom.tools.OWWDisplay3D import OWWDisplay3D
 from orangecustom.tools.DataFormatVerifications import isListOfArray
 
+
+def rescale_range(x):
+    """First line is not shown
+Rescale maximum and minimum values of an array to 1 and 0
+
+Parameters
+-----
+    x: numpy array
+
+Returns
+-----
+    A ndarray with for each values (x-np.min(x))/(np.max(x)-np.min(x))"""
+    return (x-np.min(x))/(np.max(x)-np.min(x))
+
 function_dict = {
     "absolute": np.abs,
     "logarithm": np.log,
@@ -19,12 +33,13 @@ function_dict = {
     "sinus": np.sin,
     "cosinus": np.cos,
     "tangent": np.tan,
-    "hyperbolic tangent": np.tanh
+    "hyperbolic tangent": np.tanh,
+    "rescale range": rescale_range
 }
 
 
 class OWIFunction(OWWDisplay3D):
-    name = "Filters"
+    name = "Functions"
     description = "Applique une fonction A*f(a*x+b)+B pour chaque image de la liste en entrée"
     icon = "icons/function.png"
     priority = 10
@@ -39,7 +54,7 @@ class OWIFunction(OWWDisplay3D):
     B = settings.Setting(0.0)
     a = settings.Setting(1.0)
     b = settings.Setting(0.0)
-    selected_filter = settings.Setting(0)
+    selected_function = settings.Setting(0)
     automatic_propagation = settings.Setting(False)
 
     def __init__(self):
@@ -56,11 +71,13 @@ class OWIFunction(OWWDisplay3D):
         gui.doubleSpin(box2, self, 'b', minv=-1000, maxv=1000, step=0.5, label='b:', labelWidth=30)
         hb1 = gui.hBox(box2)
         gui.label(hb1,self,'f:')
-        self.cb_selectes_filter = gui.comboBox(hb1,self,'selected_filter',
+        self.cb_selectes_filter = gui.comboBox(hb1,self,'selected_function',
                                 items=tuple([key for key in function_dict]),
                                 callback=self.selection_changed,
                                 searchable=True)
-        self.infob = gui.widgetLabel(box2, function_dict["absolute"].__doc__)
+        self.infob = gui.widgetLabel(box2, "")#function_dict["absolute"].__doc__)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.controlArea.layout().addItem(spacerItem)
 
         gui.checkBox(self.buttonsArea,self,
                      'automatic_propagation',
@@ -80,7 +97,7 @@ class OWIFunction(OWWDisplay3D):
         filter_name = self.cb_selectes_filter.currentText()
 
         # show function description
-        self.infob.setText(function_dict[filter_name].__doc__)
+        self.infob.setText("\n".join(function_dict[filter_name].__doc__.split("\n")[1:]))
 
         self.compute(filter_name)
         # afficher
