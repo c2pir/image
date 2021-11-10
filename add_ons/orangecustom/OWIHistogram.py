@@ -23,6 +23,7 @@ class OWIHistogram(OWWidget):
         hist = Output("Histograms", list)
 
     #want_main_area = False
+    controlAreaVisible = False
 
     def __init__(self):
         super().__init__()

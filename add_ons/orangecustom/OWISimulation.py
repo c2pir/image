@@ -3,6 +3,7 @@
 """
 
 import numpy as np
+import matplotlib.pyplot as plt
 import Orange.data
 from Orange.widgets.widget import OWWidget, Input, Output
 from Orange.widgets import gui, settings
@@ -27,7 +28,11 @@ class OWISimulation(OWWDisplay3D):
         coeff = Input("ED coefficient", Orange.data.Table)
         dirichet = Input("Dirichlet conditions", Orange.data.Table)
 
+    class Outputs:
+        result = Output("Results", list)
+
     dirichlet_mode = settings.Setting(0)
+    expr = settings.Setting("x")
     dt = settings.Setting(0.1)
     dl = settings.Setting(0.5)
     nb_iterations = settings.Setting(10)
@@ -42,14 +47,16 @@ class OWISimulation(OWWDisplay3D):
         #GUI
         box_cond = gui.widgetBox(self.controlArea, "Dirichlet conditions")
         gui.radioButtons(box_cond, self, 'dirichlet_mode',
-                         ["from input","framework", "center"],
+                         ["from input","framework", "none"],
                          callback = self.get_dirichlet)
 
         box_param = gui.widgetBox(self.controlArea, "Parameters")
+        gui.lineEdit(box_param, self, 'expr', label="f(x) =", labelWidth=40)
         gui.doubleSpin(box_param, self, 'dt', minv=0.000001, maxv=2.0, step=0.01, decimals=5, label='dt:', labelWidth=30)
         gui.doubleSpin(box_param, self, 'dl', minv=0.000001, maxv=2.0, step=0.01, label='dl:', labelWidth=30)
         gui.spin(box_param, self, 'nb_iterations', minv=1, maxv=1000, step=5, label='nb. iterations:', labelWidth=80)
 
+        gui.toolButton(self.controlArea,self,"Show f",callback=self.show_f)
         gui.toolButton(self.controlArea,self,"Run",callback=self.commit)
         gui.toolButton(self.controlArea,self,"Save as gif",callback=self.save_as_gif)
 
@@ -61,18 +68,24 @@ class OWISimulation(OWWDisplay3D):
 # GUI methods
     def run_simu(self):
         """ """
+        f = eval("lambda x: "+str(self.expr))
         coeffs = self.coeff.X
         self.result = [self.img.X]
         img = self.img.X.copy()
         for i in range(self.nb_iterations):
             r = 0
             for coeff in coeffs:
-                shifted = np.roll(img, coeff[0], 0)
+                shifted = np.roll(img, int(coeff[0]), 0)
                 shifted = np.roll(shifted, int(coeff[1]), 1)
                 r += coeff[3]*(self.dl**coeff[2])*shifted
-            tmp = img.copy() + self.dt*r.copy()
+            tmp = img.copy() + self.dt*f(r.copy())
             
-            # TODO dirichet conditions
+            if False: # FIXME add checkbox 
+                one = 1.0*(tmp>1.0)
+                zero = 1.0*(tmp<0.0)
+                tmp = tmp*(1-one-zero) + one
+            
+            # dirichet conditions
             img = tmp*(1-self.dirichet)+img.copy()*self.dirichet
             
             self.result.append(img.copy())
@@ -93,15 +106,23 @@ class OWISimulation(OWWDisplay3D):
             self.dirichet[:,-1]=1
         
         if self.dirichlet_mode==2:
-            # TODO
-            pass
+            self.dirichet = np.zeros_like(self.img.X)
 
 
     def save_as_gif(self):
-        # TODO open folder
+        # open folder
         filename = QtWidgets.QFileDialog.getSaveFileName(self, 'Save File', '', "Animation (*.gif)")
         if filename!="":
-            imageio.mimsave(filename, self.result)
+            imageio.mimsave(filename[0], self.result)
+
+
+    def show_f(self):
+        # open folder
+        f = eval("lambda x: "+str(self.expr))
+        x = np.linspace(0,1,200)
+        plt.plot(x, f(x))
+        plt.grid(True)
+        plt.show()
 
 # Orange methods
     @Inputs.img
@@ -128,7 +149,7 @@ class OWISimulation(OWWDisplay3D):
         self.run_simu()
         
         self.update_display()
-        #self.Outputs.result.send(self.result)
+        self.Outputs.result.send(self.result)
 
 if __name__ == "__main__":
     # https://orange3.readthedocs.io/projects/orange-development/en/latest/testing.html#running-widgets-as-scripts
