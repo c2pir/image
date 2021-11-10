@@ -10,9 +10,8 @@ from Orange.widgets.widget import OWWidget, Input, Output
 from Orange.widgets import gui,settings
 
 import os
-from AnyQt.QtWidgets import \
-    QStyle, QComboBox, QMessageBox, QGridLayout, QLabel, \
-    QLineEdit, QSizePolicy as Policy, QCompleter, QFileDialog
+from AnyQt import QtWidgets, QtCore, QtGui
+
 from Orange.widgets.data import owfile
 from skimage import io
 
@@ -43,25 +42,25 @@ class OWIReader(OWWDisplay3D):
         self.result = None
 
         # GUI
-        layout = QGridLayout()
+        layout = QtWidgets.QGridLayout()
         layout.setSpacing(4)
         gui.widgetBox(self.controlArea, orientation=layout, box='Folder')
 
         box = gui.hBox(None, addToLayout=False, margin=0)
-        box.setSizePolicy(Policy.MinimumExpanding, Policy.Fixed)
+        box.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Fixed)
         box.layout().addWidget(gui.widgetLabel(box, 'Select a folder:'))
 
         file_button = gui.button(
             None, self, '...', callback=self.browse_folder, autoDefault=False)
-        file_button.setIcon(self.style().standardIcon(QStyle.SP_DirOpenIcon))
-        file_button.setSizePolicy(Policy.Maximum, Policy.Fixed)
+        file_button.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_DirOpenIcon))
+        file_button.setSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
         box.layout().addWidget(file_button)
 
         reload_button = gui.button(
             None, self, "Reload", callback=self.load_data, autoDefault=False)
         reload_button.setIcon(self.style().standardIcon(
-            QStyle.SP_BrowserReload))
-        reload_button.setSizePolicy(Policy.Fixed, Policy.Fixed)
+            QtWidgets.QStyle.SP_BrowserReload))
+        reload_button.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         #layout.addWidget(reload_button, 0, 2)
         box.layout().addWidget(reload_button)
         layout.addWidget(box, 0, 0)
@@ -71,12 +70,14 @@ class OWIReader(OWWDisplay3D):
 
         self.infob = gui.widgetLabel(self, '...')
         layout.addWidget(self.infob, 2, 0)
+        
+        layout.addItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 
 
 # GUI methods
     def browse_folder(self):
         """Open folder explorer then load images."""
-        self.folderpath = QFileDialog.getExistingDirectory(self, 'Select Folder')
+        self.folderpath = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
         self.infoa.setText(self.folderpath)
         self.load_data()
 

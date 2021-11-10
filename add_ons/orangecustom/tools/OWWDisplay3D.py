@@ -22,7 +22,7 @@ class OWWDisplay3D(OWWidget):
         self.l_img_index = gui.label(hb0, self, '.../...')
         self.l_img_index.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignVCenter)
         gui.toolButton(hb0, self, '>', callback=self.next_img)
-
+        
         box = gui.widgetBox(self.mainArea, "Display")
         self.display = SFigure(self)
         box.layout().addWidget(self.display)

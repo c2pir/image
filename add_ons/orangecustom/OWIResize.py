@@ -58,6 +58,7 @@ class OWIResize(OWWDisplay3D):
         gui.radioButtons(self.box_custom,self,'selected_resize_type',["Crop top left","Crop center","Resize"])
 
         gui.toolButton(self.box_custom,self,"Apply and save current settings",callback=self.do_save_conf)
+        self.controlArea.layout().addItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 
         gui.checkBox(self.buttonsArea, self,
                      'allow_propagation',

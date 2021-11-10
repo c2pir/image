@@ -20,7 +20,7 @@ class OWIHistogram(OWWidget):
         imgs = Input("Liste d'images", list)
 
     class Outputs:
-        hist = Output("Liste des histogrammes", list)
+        hist = Output("Histograms", list)
 
     #want_main_area = False
 
@@ -32,6 +32,7 @@ class OWIHistogram(OWWidget):
         box = gui.widgetBox(self.controlArea, "Info")
         self.infoa = gui.widgetLabel(box, 'No data yet, waiting to get something.')
         self.infob = gui.widgetLabel(box, '...')
+        self.controlArea.layout().addItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 
         box2 = gui.widgetBox(self.mainArea,"Display")
         self.display = SFigure(self)

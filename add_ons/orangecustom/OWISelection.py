@@ -35,8 +35,9 @@ class OWISelection(OWWidget):
 
         # GUI
         box = gui.widgetBox(self.controlArea, "Info",margin=3)
-        self.infoa = gui.widgetLabel(box, 'No data on msk yet, waiting to get something.')
+        self.infoa = gui.widgetLabel(box, 'No data yet, waiting to get something.')
 
+        self.controlArea.layout().addItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
         gui.checkBox(self.buttonsArea,self,
                      'automatic_propagation',
                      'Automatic propagation',

@@ -7,6 +7,7 @@ import Orange.data
 from Orange.widgets.widget import OWWidget, Input, Output
 from Orange.widgets import gui, settings
 from AnyQt import QtWidgets, QtCore, QtGui
+from skimage import io
 
 from orangecustom.tools.Graph import SFigure
 
@@ -36,6 +37,7 @@ class OWIRGBMaker(OWWidget):
         self.infog = gui.widgetLabel(box, 'No green data yet, waiting to get something.')
         self.infob = gui.widgetLabel(box, 'No blue data yet, waiting to get something.')
         gui.toolButton(box,self,'Compose RGB image',callback=self.compose)
+        self.controlArea.layout().addItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 
         box2 = gui.widgetBox(self.mainArea, "Display")
         self.display = SFigure(self)
@@ -56,6 +58,8 @@ class OWIRGBMaker(OWWidget):
                 self.rgb = r
                 self.display.draw3D(self.rgb)
                 self.clear_messages()
+                # TODO add file dialog
+                io.imsave("result.png",r)
             else:
                 self.warning("Red, green and blue images havn't the same shape: {} {} {}".format(self.red.X.shape,
                                                                                                 self.green.X.shape,
