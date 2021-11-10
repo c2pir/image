@@ -33,6 +33,8 @@ class OWIHadamard(OWWDisplay3D):
         # GUI
         # checkbox auto
         # checkbox normalisé
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.controlArea.layout().addItem(spacerItem)
 
     @Inputs.weight
     def set_weight(self, dataset):
@@ -53,4 +55,6 @@ class OWIHadamard(OWWDisplay3D):
         for img in self.imgs:
             if img.shape==alpha.shape:
                 self.result.append(alpha * img)
+        
+        self.update_display()
         self.Outputs.result.send(self.result)

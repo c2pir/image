@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="" description="">
+	<nodes>
+		<node id="0" name="Random" qualified_name="orangecustom.OWIRandom.OWIRandom" project_name="ImageTools" version="" title="Random" position="(349.0, 198.0)" />
+		<node id="1" name="Python Script" qualified_name="Orange.widgets.data.owpythonscript.OWPythonScript" project_name="Orange3" version="" title="Python Script" position="(1027.0, 497.0)" />
+		<node id="2" name="Filters" qualified_name="orangecustom.OWIFilters.OWIFilters" project_name="ImageTools" version="" title="Filters" position="(524.0, 408.0)" />
+		<node id="3" name="Reader" qualified_name="orangecustom.OWIReader.OWIReader" project_name="ImageTools" version="" title="Reader" position="(374.0, 493.0)" />
+		<node id="4" name="Select" qualified_name="orangecustom.OWISelection.OWISelection" project_name="ImageTools" version="" title="Select" position="(829.0, 497.0)" />
+		<node id="5" name="Filters" qualified_name="orangecustom.OWIFilters.OWIFilters" project_name="ImageTools" version="" title="Filters (1)" position="(531.0, 599.0)" />
+		<node id="6" name="Filters" qualified_name="orangecustom.OWIFilters.OWIFilters" project_name="ImageTools" version="" title="Filters (2)" position="(673.0, 297.0)" />
+		<node id="7" name="Filters" qualified_name="orangecustom.OWIFilters.OWIFilters" project_name="ImageTools" version="" title="Filters (3)" position="(502.0, 154.0)" />
+		<node id="8" name="Histogram" qualified_name="orangecustom.OWIHistogram.OWIHistogram" project_name="ImageTools" version="" title="Histogram" position="(849.0, 159.0)" />
+		<node id="9" name="Filters" qualified_name="orangecustom.OWIFilters.OWIFilters" project_name="ImageTools" version="" title="Filters (4)" position="(667.0, 151.0)" />
+	</nodes>
+	<links>
+		<link id="0" source_node_id="3" sink_node_id="2" source_channel="Grayscale" sink_channel="Liste d'images" enabled="true" />
+		<link id="1" source_node_id="4" sink_node_id="1" source_channel="Dernière selection" sink_channel="Data" enabled="true" />
+		<link id="2" source_node_id="4" sink_node_id="1" source_channel="Images selectionnées" sink_channel="Object" enabled="true" />
+		<link id="3" source_node_id="3" sink_node_id="5" source_channel="Grayscale" sink_channel="Liste d'images" enabled="true" />
+		<link id="4" source_node_id="2" sink_node_id="6" source_channel="Liste des resultats" sink_channel="Liste d'images" enabled="true" />
+		<link id="5" source_node_id="6" sink_node_id="4" source_channel="Liste des resultats" sink_channel="Images" enabled="true" />
+		<link id="6" source_node_id="3" sink_node_id="4" source_channel="Grayscale" sink_channel="Images" enabled="true" />
+		<link id="7" source_node_id="5" sink_node_id="4" source_channel="Liste des resultats" sink_channel="Images" enabled="true" />
+		<link id="8" source_node_id="0" sink_node_id="7" source_channel="Grayscale" sink_channel="Liste d'images" enabled="true" />
+		<link id="9" source_node_id="7" sink_node_id="9" source_channel="Liste des resultats" sink_channel="Liste d'images" enabled="true" />
+		<link id="10" source_node_id="9" sink_node_id="8" source_channel="Liste des resultats" sink_channel="Liste d'images" enabled="true" />
+	</links>
+	<annotations />
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="literal">{'controlAreaVisible': True, 'heigth': 100, 'nb_imgs': 3, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x02\xe0\x00\x00\x01w\x00\x00\x06\xde\x00\x00\x03j\x00\x00\x02\xe0\x00\x00\x01w\x00\x00\x06\xde\x00\x00\x03j\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x02\xe0\x00\x00\x01w\x00\x00\x06\xde\x00\x00\x03j', 'width': 100, '__version__': 1}</properties>
+		<properties node_id="1" format="literal">{'controlAreaVisible': True, 'currentScriptIndex': 0, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x00\xa2\x00\x00\x00\x89\x00\x00\x04\xda\x00\x00\x03}\x00\x00\x00\xa3\x00\x00\x00\xaf\x00\x00\x04\xd9\x00\x00\x03|\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x00\xa3\x00\x00\x00\xaf\x00\x00\x04\xd9\x00\x00\x03|', 'scriptLibrary': [], 'scriptText': 'import matplotlib.pyplot as plt\nimport numpy as np\n\nif in_data is not None:\n    print(type(in_data))\n    #print(in_data.X)\n\nif in_object is not None:\n    maxi = in_object[0]\n    img = in_object[1]\n    g = in_object[2]\n    shape = maxi.shape\n    x,y = np.meshgrid(np.linspace(0,shape[1]-1,shape[1]),\n            np.linspace(0,shape[0]-1,shape[0]))\n    \n    positions = np.argwhere(maxi==1)\n    r = 0\n    for pos in positions:\n        alpha = np.log(g[pos[0],pos[1]]/img[pos[0],pos[1]])\n        print(pos,alpha)\n        d = (x-pos[1])**2 + (y-pos[0])**2\n        v = img[pos[0],pos[1]]*np.exp(alpha*d)\n        r += v - r*v\n    \n    plt.imshow(r)\n    plt.show()', 'splitterState': b'\x00\x00\x00\xff\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x01\xb4\x00\x00\x00\xc2\x01\xff\xff\xff\xff\x01\x00\x00\x00\x02\x00', 'vimModeEnabled': False, '__version__': 2}</properties>
+		<properties node_id="2" format="literal">{'automatic_propagation': True, 'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x01\xd0\x00\x00\x00\xea\x00\x00\x06\xcb\x00\x00\x03\x16\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15', 'selected_filter': 12, '__version__': 1}</properties>
+		<properties node_id="3" format="literal">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x01\x8a\x00\x00\x00\xe0\x00\x00\x04\t\x00\x00\x02\xbf\x00\x00\x01\x8a\x00\x00\x00\xe0\x00\x00\x04\t\x00\x00\x02\xbf\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x01\x8a\x00\x00\x00\xe0\x00\x00\x04\t\x00\x00\x02\xbf', '__version__': 1}</properties>
+		<properties node_id="4" format="literal">{'automatic_propagation': True, 'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x02\x1d\x00\x00\x01\x13\x00\x00\x05\x9b\x00\x00\x03\x19\x00\x00\x02\x1e\x00\x00\x019\x00\x00\x05\x9a\x00\x00\x03\x18\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x02\x1e\x00\x00\x019\x00\x00\x05\x9a\x00\x00\x03\x18', '__version__': 1}</properties>
+		<properties node_id="5" format="literal">{'automatic_propagation': True, 'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15', 'selected_filter': 0, '__version__': 1}</properties>
+		<properties node_id="6" format="literal">{'automatic_propagation': True, 'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\xff\xff\xff\xff\xff\xff\xff\xf7\x00\x00\x07\x80\x00\x00\x04\x06\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15\x00\x00\x00\x00\x02\x00\x00\x00\x07\x80\x00\x00\x00\x00\x00\x00\x00\x1d\x00\x00\x07\x7f\x00\x00\x04\x05', 'selected_filter': 1, '__version__': 1}</properties>
+		<properties node_id="7" format="literal">{'automatic_propagation': True, 'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15', 'selected_filter': 0, '__version__': 1}</properties>
+		<properties node_id="8" format="literal">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x036\x00\x00\x00\xb8\x00\x00\x07J\x00\x00\x02\xbe\x00\x00\x037\x00\x00\x00\xde\x00\x00\x07I\x00\x00\x02\xbd\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x037\x00\x00\x00\xde\x00\x00\x07I\x00\x00\x02\xbd', '__version__': 1}</properties>
+		<properties node_id="9" format="literal">{'automatic_propagation': True, 'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x01\xd0\x00\x00\x00\xea\x00\x00\x06\xcb\x00\x00\x03\x16\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x01\xd1\x00\x00\x01\x10\x00\x00\x06\xca\x00\x00\x03\x15', 'selected_filter': 4, '__version__': 1}</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

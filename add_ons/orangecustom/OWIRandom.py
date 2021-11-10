@@ -45,7 +45,7 @@ class OWIRandom(OWWDisplay3D):
         box0.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Fixed)
         box0.layout().addWidget(gui.widgetLabel(box0, 'Number of images:'))
         
-        self.s_width = gui.spin(box0,self,"nb_imgs",1,20)
+        self.s_nb_imgs = gui.spin(box0,self,"nb_imgs",1,20)
         
         box1 = gui.hBox(None, addToLayout=False, margin=0)
         box1.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Fixed)
@@ -55,7 +55,6 @@ class OWIRandom(OWWDisplay3D):
         self.s_height = gui.spin(box1,self,"heigth",50,1024)
         gui.toolButton(box1,self,'create',callback=self.commit)
         
-        #box.layout().addWidget(self.s_width)
         layout.addWidget(box0, 0, 0)
 
         self.infoa = gui.widgetLabel(self, 'Output not generated.')

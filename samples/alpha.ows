@@ -1,20 +1,23 @@
 <?xml version='1.0' encoding='utf-8'?>
 <scheme version="2.0" title="" description="">
 	<nodes>
-		<node id="0" name="Reader" qualified_name="orangecustom.OWIReader.OWIReader" project_name="ImageTools" version="" title="Reader" position="(157.0, 192.0)" />
-		<node id="1" name="Alpha" qualified_name="orangecustom.OWIHadamard.OWIHadamard" project_name="ImageTools" version="" title="Alpha" position="(530.0, 193.0)" />
-		<node id="2" name="Select" qualified_name="orangecustom.OWISelection.OWISelection" project_name="ImageTools" version="" title="Select" position="(349.0, 93.0)" />
+		<node id="0" name="Alpha" qualified_name="orangecustom.OWIHadamard.OWIHadamard" project_name="ImageTools" version="" title="Alpha" position="(629.0, 147.0)" />
+		<node id="1" name="Reader" qualified_name="orangecustom.OWIReader.OWIReader" project_name="ImageTools" version="" title="Reader" position="(335.0, 140.0)" />
+		<node id="2" name="Reader" qualified_name="orangecustom.OWIReader.OWIReader" project_name="ImageTools" version="" title="Reader alpha" position="(346.0, 369.0)" />
+		<node id="3" name="Select" qualified_name="orangecustom.OWISelection.OWISelection" project_name="ImageTools" version="" title="Select alpha" position="(505.0, 371.0)" />
 	</nodes>
 	<links>
-		<link id="0" source_node_id="2" sink_node_id="1" source_channel="Dernière selection" sink_channel="Tableau de pondération" enabled="true" />
-		<link id="1" source_node_id="0" sink_node_id="2" source_channel="Grayscale" sink_channel="Images" enabled="true" />
+		<link id="0" source_node_id="1" sink_node_id="0" source_channel="Grayscale" sink_channel="Images" enabled="true" />
+		<link id="1" source_node_id="2" sink_node_id="3" source_channel="Grayscale" sink_channel="Images" enabled="true" />
+		<link id="2" source_node_id="3" sink_node_id="0" source_channel="Dernière selection" sink_channel="Tableau de pondération" enabled="true" />
 	</links>
 	<annotations />
 	<thumbnail />
 	<node_properties>
-		<properties node_id="0" format="literal">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x02\xa2\x00\x00\x00\xa8\x00\x00\x05\x17\x00\x00\x01\xd7\x00\x00\x02\xa2\x00\x00\x00\xa8\x00\x00\x05\x17\x00\x00\x01\xd7\x00\x00\x00\x00\x00\x00\x00\x00\x05V\x00\x00\x02\xa2\x00\x00\x00\xa8\x00\x00\x05\x17\x00\x00\x01\xd7', '__version__': 1}</properties>
-		<properties node_id="1" format="literal">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x01\x12\x00\x00\x00&lt;\x00\x00\x03\xcb\x00\x00\x02\x15\x00\x00\x01\x13\x00\x00\x00[\x00\x00\x03\xca\x00\x00\x02\x14\x00\x00\x00\x00\x00\x00\x00\x00\x05V\x00\x00\x01\x13\x00\x00\x00[\x00\x00\x03\xca\x00\x00\x02\x14', '__version__': 1}</properties>
-		<properties node_id="2" format="literal">{'automatic_propagation': True, 'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x01H\x00\x00\x00&lt;\x00\x00\x04\r\x00\x00\x02\x15\x00\x00\x01I\x00\x00\x00[\x00\x00\x04\x0c\x00\x00\x02\x14\x00\x00\x00\x00\x00\x00\x00\x00\x05V\x00\x00\x01I\x00\x00\x00[\x00\x00\x04\x0c\x00\x00\x02\x14', '__version__': 1}</properties>
+		<properties node_id="0" format="literal">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x02\x81\x00\x00\x019\x00\x00\x05\x00\x00\x00\x03\x18\x00\x00\x02\x81\x00\x00\x019\x00\x00\x05\x00\x00\x00\x03\x18\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x02\x81\x00\x00\x019\x00\x00\x05\x00\x00\x00\x03\x18', '__version__': 1}</properties>
+		<properties node_id="1" format="literal">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x02\x80\x00\x00\x01\x13\x00\x00\x05\x01\x00\x00\x03\x19\x00\x00\x02\x81\x00\x00\x019\x00\x00\x05\x00\x00\x00\x03\x18\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x02\x81\x00\x00\x019\x00\x00\x05\x00\x00\x00\x03\x18', '__version__': 1}</properties>
+		<properties node_id="2" format="literal">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x02\x80\x00\x00\x01\x13\x00\x00\x05\x01\x00\x00\x03\x19\x00\x00\x02\x81\x00\x00\x019\x00\x00\x05\x00\x00\x00\x03\x18\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x02\x81\x00\x00\x019\x00\x00\x05\x00\x00\x00\x03\x18', '__version__': 1}</properties>
+		<properties node_id="3" format="literal">{'automatic_propagation': True, 'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x02\x80\x00\x00\x01\x13\x00\x00\x05\x01\x00\x00\x03\x19\x00\x00\x02\x81\x00\x00\x019\x00\x00\x05\x00\x00\x00\x03\x18\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x02\x81\x00\x00\x019\x00\x00\x05\x00\x00\x00\x03\x18', '__version__': 1}</properties>
 	</node_properties>
 	<session_state>
 		<window_groups />

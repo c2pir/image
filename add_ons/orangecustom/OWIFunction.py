@@ -26,6 +26,21 @@ Returns
     A ndarray with for each values (x-np.min(x))/(np.max(x)-np.min(x))"""
     return (x-np.min(x))/(np.max(x)-np.min(x))
 
+
+def negatif(x):
+    """First line is not shown
+Compute negatif of a grayscale image
+
+Parameters
+-----
+    x: input image
+
+Returns
+-----
+    The negatif of the input with automatic rescaling of the min max
+    between 0 and 1."""
+    return 1.0-rescale_range(x)
+
 function_dict = {
     "absolute": np.abs,
     "logarithm": np.log,
@@ -34,7 +49,8 @@ function_dict = {
     "cosinus": np.cos,
     "tangent": np.tan,
     "hyperbolic tangent": np.tanh,
-    "rescale range": rescale_range
+    "rescale range": rescale_range,
+    "negatif": negatif
 }
 
 

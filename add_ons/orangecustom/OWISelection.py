@@ -26,6 +26,7 @@ class OWISelection(OWWidget):
         selection = Output("Dernière selection", Orange.data.Table)
 
     automatic_propagation = settings.Setting(False)
+    controlAreaVisible = False
 
     def __init__(self):
         super().__init__()
@@ -113,7 +114,7 @@ if __name__ == "__main__":
     # https://orange3.readthedocs.io/projects/orange-development/en/latest/testing.html#running-widgets-as-scripts
     from Orange.widgets.utils.widgetpreview import WidgetPreview
     from skimage import io
-    inp = ([io.imread("icons/find.png",as_gray=True)/255.0,
-           io.imread("icons/selection.png",as_gray=True)/255.0,
-           io.imread("icons/image_reader.png",as_gray=True)/255.0],(0,"",None))
+    inp = None# ([io.imread("icons/find.png",as_gray=True)/255.0,
+    #       io.imread("icons/selection.png",as_gray=True)/255.0,
+    #       io.imread("icons/image_reader.png",as_gray=True)/255.0],(0,"",None))
     WidgetPreview(OWISelection).run(inp)

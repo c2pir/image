@@ -30,11 +30,11 @@ class OWIReader(OWWDisplay3D):
         blue = Output("Bleus", list)
 
     #want_main_area = False
+    folderpath = settings.Setting("")
 
     def __init__(self):
         super().__init__()
 
-        self.folderpath = ""
         self.red = None
         self.green = None
         self.blue = None
@@ -57,7 +57,7 @@ class OWIReader(OWWDisplay3D):
         box.layout().addWidget(file_button)
 
         reload_button = gui.button(
-            None, self, "Reload", callback=self.load_data, autoDefault=False)
+            None, self, "Reload", callback=self.commit, autoDefault=False)
         reload_button.setIcon(self.style().standardIcon(
             QtWidgets.QStyle.SP_BrowserReload))
         reload_button.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -78,13 +78,14 @@ class OWIReader(OWWDisplay3D):
     def browse_folder(self):
         """Open folder explorer then load images."""
         self.folderpath = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
-        self.infoa.setText(self.folderpath)
-        self.load_data()
+        
+        self.commit()
 
 
     def load_data(self):
         """Load images in folder path."""
         if self.folderpath != "":
+            self.infoa.setText(self.folderpath)
             self.red = []
             self.green = []
             self.blue = []
@@ -111,11 +112,12 @@ class OWIReader(OWWDisplay3D):
 
             self.infob.setText(list_files)
             self.update_display()
-            self.commit()
+    
 
 # Orange methods
     def commit(self):
         """Send the outputs"""
+        self.load_data()
         self.Outputs.gray.send(self.gray)
         self.Outputs.red.send(self.red)
         self.Outputs.green.send(self.green)
