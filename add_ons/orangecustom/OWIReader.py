@@ -94,7 +94,7 @@ class OWIReader(OWWDisplay3D):
             list_files = ""
             cpt = 0
             for file_name in os.listdir(self.folderpath):
-                if file_name.endswith(".jpg") or file_name.endswith(".png"):
+                if file_name.endswith(".jpg") or file_name.endswith(".png") or file_name.endswith(".PNG"):
 
                     path = os.path.join(self.folderpath, file_name)
                     img = io.imread(path)

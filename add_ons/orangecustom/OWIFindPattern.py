@@ -34,14 +34,15 @@ class OWIFindPattern(OWWDisplay3D):
         # GUI
         self.infoa = gui.widgetLabel(self.box_info, 'No pattern yet, waiting to get something.')
         self.infob = gui.widgetLabel(self.box_info, 'No data on img yet, waiting to get something.')
-
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.controlArea.layout().addItem(spacerItem)
 
 # Orange methods
     @Inputs.pattern
     def set_pattern(self, dataset):
         self.pattern = dataset
         if (dataset is not None):
-            self.infoa.setText('pattern shape: {}'.format(pattern.X.shape))
+            self.infoa.setText('pattern shape: {}'.format(self.pattern.X.shape))
         if self.imgs is not None:
             self.commit()
 
