@@ -39,10 +39,10 @@ class OWILocalFilter(OWWDisplay3D):
         optionsBox = gui.widgetBox(self.controlArea, "Mask center")
         hl0 = gui.hBox(optionsBox)
         gui.label(hl0,self,'shift x')
-        gui.spin(hl0, self, 'center_x', minv=0, maxv=20, step=1)
+        gui.spin(hl0, self, 'center_x', minv=0, maxv=1000, step=1)
         hl1 = gui.hBox(optionsBox)
         gui.label(hl1, self, 'shift y')
-        gui.spin(hl1, self, 'center_y', minv=0, maxv=20, step=1)
+        gui.spin(hl1, self, 'center_y', minv=0, maxv=1000, step=1)
         gui.toolButton(optionsBox,self,"Refresh",callback=self.commit)
         
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -70,9 +70,9 @@ class OWILocalFilter(OWWDisplay3D):
             for i in range(msk.shape[0]):
                 for j in range(msk.shape[1]):
                     si, sj = (i-self.center_y), (j-self.center_x)
-                    shifted = np.roll(img, si, 0)
+                    shifted = np.roll(img.copy(), si, 0)
                     shifted = np.roll(shifted, sj, 1)
-                    r += msk[i,j]*shifted
+                    r += msk[i,j]*shifted.copy()
             self.result.append(r)
 
         self.update_display()

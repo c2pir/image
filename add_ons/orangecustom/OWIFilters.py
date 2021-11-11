@@ -63,6 +63,9 @@ class OWIFilters(OWWDisplay3D):
         gui.toolButton(hb1,self,'+',tooltip="Configuration")
         self.infob = gui.widgetLabel(box2, filters_dict["Flou - gaussian"].__doc__)
 
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.controlArea.layout().addItem(spacerItem)
+        
         gui.checkBox(self.buttonsArea,self,
                      'automatic_propagation',
                      'Automatic propagation',

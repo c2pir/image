@@ -27,6 +27,15 @@ Returns
     return (x-np.min(x))/(np.max(x)-np.min(x))
 
 
+def roll(x):
+    """First line is not shown
+"""
+    h,w = x.shape
+    r = np.roll(x, int(h/2),0)
+    r = np.roll(r, int(w/2),1)
+    return r
+
+
 def negatif(x):
     """First line is not shown
 Compute negatif of a grayscale image
@@ -50,7 +59,8 @@ function_dict = {
     "tangent": np.tan,
     "hyperbolic tangent": np.tanh,
     "rescale range": rescale_range,
-    "negatif": negatif
+    "negatif": negatif,
+    "roll": roll
 }
 
 

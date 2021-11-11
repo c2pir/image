@@ -51,6 +51,7 @@ class OWISelection(OWWidget):
         self.lv_images = QtWidgets.QListWidget(self)
         self.lv_images.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.lv_images.itemClicked.connect(self.on_selection)
+        self.lv_images.setMaximumWidth(280)
         hb.layout().addWidget(self.lv_images)
 
 # GUI methods
